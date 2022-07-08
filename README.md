@@ -12,10 +12,14 @@
 
 ## CODE
 
-1.1 PREPROCESSING OF SERUM: describe the preprocess used (normalisation and data compression methods) \n
-1.2 Present the classification of the hepatic triglyceride using random forest and associated figures. \n
+1.1 PREPROCESSING OF SERUM: describe the preprocess used (normalisation and data compression methods).
+
+1.2 Present the classification of the hepatic triglyceride using random forest and associated figures.
+
 1.3 Present the classification of the hepatic steatosis using random forest and associated figures. 
 
-2.1 PREPROCESSING OF BLOOD SMEAT: describe the preprocess used (normalisation and data compression methods)
+2.1 PREPROCESSING OF BLOOD SMEAT: describe the preprocess used (normalisation and data compression methods).
+
 2.2 Present the determination of the hepatic liver statu using clustering method and associated figures
+
 2.3 Present the classification of the hepatic inflammation using random forest and associated figures.
