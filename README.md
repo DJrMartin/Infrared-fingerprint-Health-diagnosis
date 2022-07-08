@@ -18,7 +18,7 @@
 
 1.3 Present the classification of the hepatic steatosis using random forest and associated figures. 
 
-2.1 PREPROCESSING OF BLOOD SMEAT: describe the preprocess used (normalisation and data compression methods).
+2.1 PREPROCESSING OF BLOOD SMEAR: describe the preprocess used (normalisation and data compression methods).
 
 2.2 Present the determination of the hepatic liver statu using clustering method and associated figures
 
