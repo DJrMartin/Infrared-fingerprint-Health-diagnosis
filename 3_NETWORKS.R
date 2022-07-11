@@ -1,6 +1,10 @@
+installed = installed.packages()
+if (!("igraph" %in% installed)) { install.packages("igraph") }
+
+library('igraph')
 #DATA IMPORT FROM RANDOM FOREST IMPORTANT WAVENUMBERS
 
-#GRAPH FOR STEATOSIS/TRIGLY
+# GRAPH FOR STEATOSIS/TRIGLY
 graph='steatosis'
 if (graph=='trigly'){
   load('~/Dropbox/DPSMET_2021/codes figures papier/networks_for_trigly.RData')
@@ -8,7 +12,6 @@ if (graph=='trigly'){
   load('~/Dropbox/DPSMET_2021/codes figures papier/networks_for_steatosis.RData')
 }
 
-library('igraph')
 net <- graph_from_data_frame(d=links, vertices=nodes, directed=T) 
 net
 
@@ -20,7 +23,7 @@ plot(net, edge.arrow.size=0, vertex.label.cex=0.8,vertex.label.color="black",mar
 legend(x=-1.5, y=-1.1, c("C=O (Esters)", "C-O (Lipids)","C-O (Carbohydrate)","C-C/C-O (Carbohydrate)"), pch=21,
        col=colrs, pt.bg=colrs, pt.cex=2, cex=.8, bty="n", ncol=1)
 
-#Graph for INFLAMMATION
+# GRAPH FOR INFLAMMATION
 load('~/Dropbox/DPSMET_2021/codes figures papier/network_for_inflammation.RData')
 
 net <- graph_from_data_frame(d=links, vertices=nodes, directed=T) 

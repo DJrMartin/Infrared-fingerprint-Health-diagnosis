@@ -1,22 +1,28 @@
+installed = installed.packages()
+if (!("signal" %in% installed)) { install.packages("signal") }
+if (!("pls" %in% installed)) { install.packages("pls") }
+if (!("fda" %in% installed)) { install.packages("fda") }
+if (!("FactoMineR" %in% installed)) { install.packages("FactoMineR") }
+
 library(signal)
 library(pls)
 library(fda)
 library(FactoMineR)
 
-#DATA IMPORTATION
+# DATA IMPORTATION
 setwd(dir="~/Desktop/DATA_HEALTH_DIAGNOSIS")
 dir()
 MIR.1 = read.csv("Serum_bruts_SET1.csv", sep=';')
 MIR.2 = read.csv("Serum_bruts_SET2.csv", sep=';')
 
-#WAVENUMBERS SELECTION
+#W AVENUMBERS SELECTION
 freq_set1=as.numeric(substr(colnames(MIR.1),2,9))
 freq_set2=as.numeric(substr(colnames(MIR.2),2,9))
 
 fingerprint_set1=c(which(freq_set1<1800&freq_set1>800))
 fingerprint_set2=c(which(freq_set2<1800&freq_set2>800))
 
-#DATA VISUALISATION
+# DATA VISUALISATION
 matplot(freq_set1[fingerprint_set1], t(MIR.1[,fingerprint_set1]), typ="l",col=1,lty=1,ylab="Absorbances",xlab="freq")
 matlines(freq_set2[fingerprint_set2], t(MIR.2[,fingerprint_set2]), typ="l",col=2,lty=1)
 
@@ -25,14 +31,14 @@ SET_2_spectra=MIR.2[,fingerprint_set2]
 
 dev.off()
 
-#DATA TRANSFORMATIONS, SECOND DERIVES
-##SET 1
+# DATA TRANSFORMATIONS &  SECOND DERIVATIVES COMPUTATION
+## SET 1
 Sd2raman = apply(SET_1_spectra,1,sgolayfilt,p=3,n=9,m=2)
 str(Sd2raman)
 Sd2raman = t(Sd2raman)
 colnames(Sd2raman)=freq_set1[fingerprint_set1]
 SET_1_spectra_D2=as.data.frame(Sd2raman)
-##SET 2
+## SET 2
 Sd2raman = apply(SET_2_spectra,1,sgolayfilt,p=3,n=9,m=2)
 str(Sd2raman)
 Sd2raman = t(Sd2raman)
@@ -44,8 +50,8 @@ matlines(freq_set1[fingerprint_set1], t(SET_2_spectra_D2), typ="l",col=2,lty=1)
 
 dev.off()
 
-#DATA NORMALISATION THROUGH VECTOR NORMALISATION
-##Normalise vector
+# DATA NORMALISATION THROUGH VECTOR NORMALISATION
+# #Normalise vector
 normalize.vector <-function(v){v/sqrt(sum(v^2))}
 MAT.D2=rbind(SET_1_spectra_D2,SET_2_spectra_D2)
 all_spec <- normalize.vector(MAT.D2)
@@ -68,7 +74,7 @@ paste('individu',c(which(as.numeric(res.PCA$ind$coord[,1])>40),
 #33, 35,49, 88
 outliers=c(33,35,49,88)
 
-#DATA COMPRESSION THROUGH A B SPLINE FUNCTION
+# DATA COMPRESSION, B SPLINE PROJECTION
 projRecomp = function(xdata, nBasis, t = 1:dim(xdata)[2], basis = "Splines"){
   t = sort((t-min(t))/(max(t)-min(t)))
   if (basis == "Fourier") {basisobj = create.fourier.basis(nbasis = nBasis)}
@@ -114,7 +120,7 @@ plot(freq_set1[fingerprint_set1][1:485],SET_1_2_SPECTRA[1,],typ="l",
   lines(freq_set1[fingerprint_set1][1:485],x_recom[1,486:970],col="green")
   lines(freq_set1[fingerprint_set1][1:485],x_recom[1,971:1455],col="blue")
 
-#DATA SAVING FOR NEXT EXPLORATION
+# DATA SAVING FOR NEXT EXPLORATION
 SET_1_spectra_D2_SPLINE=as.data.frame(x_all[c(1:93),])
 SET_1_spectra_D2_SPLINE=as.data.frame(SET_1_spectra_D2_SPLINE[-outliers,])
 SET_2_spectra_D2_SPLINE=as.data.frame(x_all[c(94:119),])
